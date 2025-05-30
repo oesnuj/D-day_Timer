@@ -102,33 +102,30 @@ body{
 
 </body>
 <script>
-    const year = new Date().getFullYear();
-const myDate = new Date('Sep 19, 2024 16:00:00');
-console.log(myDate);
+    const myDate = new Date('Sep 19, 2024 16:00:00'); // 또는 UTC 고정 필요 시 위 설명 참고
 
-// countdown
-let timer = setInterval(function() {
+let timer = setInterval(function () {
+  const now = new Date().getTime();
+  const diff = myDate - now;
 
-  // get today's date
-  const today = new Date().getTime();
+  if (diff < 0) {
+    clearInterval(timer);
+    document.getElementById("days").innerHTML = 0;
+    document.getElementById("hours").innerHTML = 0;
+    document.getElementById("minutes").innerHTML = 0;
+    document.getElementById("seconds").innerHTML = 0;
+    return;
+  }
 
-  // get the difference
-  const diff = myDate - today;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  // math
-  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  // display
-  document.getElementById("days").innerHTML=days
-  document.getElementById("hours").innerHTML=hours
-  document.getElementById("minutes").innerHTML=minutes
-  document.getElementById("seconds").innerHTML=seconds
-
-
-
-}, 1);
+  document.getElementById("days").innerText = days;
+  document.getElementById("hours").innerText = hours;
+  document.getElementById("minutes").innerText = minutes;
+  document.getElementById("seconds").innerText = seconds;
+}, 1000);
 </script>
 </html>
